@@ -5,11 +5,11 @@ class BluePages::PagesController < ::ApplicationController
   respond_to :html
 
   def show
-    @page = ::Page.where(:path => params[:path]).first
+    @page = ::Page.where(path: params[:path]).first
     if @page
       render_page
     else
-      render_404
+      not_found
     end
   end
 
@@ -28,13 +28,6 @@ class BluePages::PagesController < ::ApplicationController
   end
 
   def render_text
-    render :text => @page.to_html, :layout => BluePages.layout
+    render text: @page.to_html, layout: BluePages.layout
   end
-
-  def render_404
-    render :file => File.join(Rails.root, "/public/404.html"),
-           :status => :not_found,
-           :layout => false
-  end
-
 end
